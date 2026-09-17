@@ -6,4 +6,4 @@ This is a repo of my work on a Chip 8 emulator written in Rust. The goals of thi
   * Learn enough about emulation in order to begin working on a GameBoy emulator, a goal of mine for the last 10 years or so.
   * Finally, write code with no AI. I haven't written much code without the assistance of AI for at least a year, and I'm afraid of the long term effects of this, so I want to write code personally, so that I keep my skills sharp enough and actually understand what I am writing.
 
-I am following [this guide](https://github.com/aquova/chip8-book) for this, so I this is not entirely handwritten code, or maybe even not at all. But that's okay with me, because I am trying to fully understand what's going on in emulation at a deeper level, and this is the natural first step.
+I am following [this guide](https://github.com/aquova/chip8-book) for this, so this is not entirely handwritten code, or maybe even not at all. But that's okay with me, because I am trying to fully understand what's going on in emulation at a deeper level, and this is the natural first step.
