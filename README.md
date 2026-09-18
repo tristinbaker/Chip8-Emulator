@@ -17,3 +17,6 @@ I am overly commenting the code for my own sake. It helps me when re-reading thi
 * [Into the Wild (Music For The Motion Picture) by Eddie Vedder](https://music.youtube.com/playlist?list=OLAK5uy_k-NKMjAPoDEbQt4z6AAkMtA0Th3aGqAuY)
 * [Morning Phase by Beck](https://music.youtube.com/playlist?list=OLAK5uy_kmDsbDzEsmwtbxsla6Gw3_1P5yV2t8zOU)
 * [My Days of 58 by Bill Callahan](https://music.youtube.com/playlist?list=OLAK5uy_mz83fBMJH5Fjw7R646W9v1eyQrri3rcbM)
+* [America by America](https://music.youtube.com/playlist?list=OLAK5uy_n9pSRCOTGn52Ff3BCj9-IKM3J0dOeXKuU)
+* [Continuum by John Mayer](https://music.youtube.com/playlist?list=OLAK5uy_m-gtPajGgyMQQeEjgJ2XAiXTBR-HiDb_o)
+* [Lamp Genso by Lamp](https://music.youtube.com/playlist?list=OLAK5uy_neWBMZ7Kei1yE2Ubgu0aJVl82tFHOX3DA)
