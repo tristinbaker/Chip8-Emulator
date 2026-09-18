@@ -144,139 +144,225 @@ impl Emu {
 
             // 00E0:  CLS
             (0, 0, 0xE, 0) => {
-            }
+                self.screen = [false; SCREEN_HEIGHT];
+            },
 
             // 00EE:  RET
+            // Returns from subroutine. Sets the return address as the last place the pc was before
+            // entering the subrouting, then sets the pc to that location, returning from the
+            // subroutine.
             (0, 0, 0xE, 0xE) => {
-            }
+                let ret_addr = self.pop();
+                self.pc = ret_attr;
+            },
 
             // 1NNN:  JMP NNN
+            // Sets the pc to the location specified in the opcode, jumping to that location in the
+            // program.
+            // Ex: 0x122A
+            // 0x122A & 0xFFF -> 0x22A
+            // pc = 0x22A.
             (1, _, _, _) => {
-            }
+                let nnn = op & 0xFFF;
+                self.pc = nnn;
+            },
 
             // 2NNN:  CALL NNN
+            // The opposite of RET, basically. Sets the PC to NNN, jumping to that location in the
+            // program. The difference between CALL and JMP is that we store where we were before
+            // JMPing to the stack.
             (2, _, _, _) => {
-            }
+                let nnn = op & 0xFFF;
+                self.push(self.pc);
+                self.pc = nnn;
+            },
 
             // 3XNN:  SKIP VX == NN
+            // First of a few conditional opcodes. Essentially building if/else statements with the
+            // next few opcodes. This one, we check if V register X is equal to the byte at NN.
+            // Ex: 32A2
+            // nn = (32A2 & 0xFF) -> nn = A2
             (3, _, _, _) => {
-            }
+                let x = digit2 as usize;
+                let nn = (op & 0xFF) as u8;
+                if self.v_reg[x] == nn {
+                    self.pc += 2;
+                }
+            },
 
             // 4XNN:  SKIP VX != NN
+            // Ex: 42A2
+            // nn = (42A2 & 0xFF) -> nn = A2
             (4, _, _, _) => {
-            }
+                let x = digit2 as usize;
+                let nn = (op & 0xff) as u8;
+                if self.v_reg[x] != nn {
+                    self.pc += 2;
+                }
+            },
 
             // 5XY0:  SKIP VX == VY
+            // Ex: 52A0
+            // x = 2, Y = A
             (5, _, _, 0) => {
-            }
+                let x = digit2 as usize;
+                let y = digit3 as usize;
+                if self.v_reg[x] == self.v_reg[y] {
+                    self.pc += 2;
+                }
+            },
 
             // 6XNN:  VX = NN
+            // Ex: 62A2
+            // nn = (62A2 & 0xFF) -> nn = A2
             (6, _, _, _) => {
-            }
+                let x = digit2 as usize;
+                let nn = (op & 0xFF) as u8;
+                self.v_reg[x] == nn;
+            },
 
             // 7XNN:  VX += NN
+            // Ex: 72A2
+            // x = 2
+            // nn = (72A2 & 0xFF) -> nn = A2
+            // wrapping_add is needed because we need to prevent overflow
             (7, _, _, _) => {
-            }
+                let x = digit2 as usize;
+                let nn = (op & 0xFF) as u8;
+                self.v_reg[x] = self.v_reg[x].wrapping_add(nn);
+            },
 
             // 8XY0:  VX = VY
+            // Ex: 82A0
+            // x = 2
+            // y = A
             (8, _, _, 0) => {
-            }
+                let x = digit2 as usize;
+                let y = digit3 as usize;
+                self.v_reg[x] = self.v_reg[y];
+            },
 
             // 8XY1:  VX |= VY
             (8, _, _, 1) => {
-            }
+                let x = digit2 as usize;
+                let y = digit3 as usize;
+                self.v_reg[x] |= self.v_reg[y]
+            },
 
             // 8XY2:  VX &= VY
             (8, _, _, 2) => {
-            }
+                let x = digit2 as usize;
+                let y = digit3 as usize;
+                self.v_reg[x] &= self.v_reg[y]
+            },
 
             // 8XY3:  VX ^= VY
             (8, _, _, 3) => {
-            }
+                let x = digit2 as usize;
+                let y = digit3 as usize;
+                self.v_reg[x] ^= self.v_reg[y]
+            },
 
             // 8XY4:  VX += VY
+            // First opcode that has to deal with the carry flag (VF). This is done by tracking
+            // whether adding VY to VX causes an overflow, and if so, VF is set to 1 if it
+            // overflowed, 0 otherwise.
+            // Ex: 82A4, V2 = 200, VA = 100, VF = 0
+            // x = 2
+            // y = A
+            // new_vx = 44, carry = true
+            // new_vf = 1 because carry = true
+            // V2 = 44, VA = 100, VF = 1
             (8, _, _, 4) => {
-            }
+                let x = digit2 as usize;
+                let y = digit3 as usize;
+
+                let (new_vx, carry) = self.v_reg[x].overflowing_add(self.v_reg[y]);
+                let new_vf = carry as u8;
+
+                self.v_reg[x] = new_vx;
+                self.v_reg[0xF] = new_vf;
+            },
 
             // 8XY5:  VX -= VY
             (8, _, _, 5) => {
-            }
+            },
 
             // 8XY6:  VX >>= 1
             (8, _, _, 6) => {
-            }
+            },
 
             // 8XY7:  VX = VY - VX
             (8, _, _, 7) => {
-            }
+            },
 
             // 8XYE:  VX <<= 1
             (8, _, _, 0xE) => {
-            }
+            },
 
             // 9XY0:  SKIP VX != VY
             (9, _, _, 0) => {
-            }
+            },
 
             // ANNN:  I = NNN
             (0xA, _, _, _) => {
-            }
+            },
             
             // BNNN:  JMP V0 + NNN
             (0xB, _, _, _) => {
-            }
+            },
             
             // CXNN:  VX = rand() & NN
             (0xC, _, _, _) => {
-            }
+            },
             
             // DXYN:  DRAW
             (0xD, _, _, _) => {
-            }
+            },
             
             // EX9E:  SKIP KEY PRESS
             (0xE, _, 9, 0xE) => {
-            }
+            },
             
             // EXA1:  SKIP KEY RELEASE
             (0xE, _, 0xA, 1) => {
-            }
+            },
             
             // FX07:  VX = DT
             (0xF, _, 0, 7) => {
-            }
+            },
             
             // FX0A:  WAIT KEY
             (0xF, _, 0, 0xA) => {
-            }
+            },
             
             // FX15:  DT = VX
             (0xF, _, 1, 5) => {
-            }
+            },
             
             // FX18:  ST = VX
             (0xF, _, 1, 8) => {
-            }
+            },
             
             // FX1E:  I += VX
             (0xF, _, 1, 0xE) => {
-            }
+            },
             
             // FX29:  I = FONT
             (0xF, _, 2, 9) => {
-            }
+            },
             
             // FX33:  BCD
             (0xF, _, 3, 3) => {
-            }
+            },
             
             // FX55:  STO V0 - VX
             (0xF, _, 5, 5) => {
-            }
+            },
             
             // FX65:  LD V0 - VX
             (0xF, _, 6, 5) => {
-            }
+            },
             
             // the fallback state in case we reach an opcode that is unimplemented
             (_, _, _, _) => unimplemented!("Unimplemented opcode: {}", op),
