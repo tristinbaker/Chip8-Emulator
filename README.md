@@ -20,3 +20,4 @@ I am overly commenting the code for my own sake. It helps me when re-reading thi
 * [America by America](https://music.youtube.com/playlist?list=OLAK5uy_n9pSRCOTGn52Ff3BCj9-IKM3J0dOeXKuU)
 * [Continuum by John Mayer](https://music.youtube.com/playlist?list=OLAK5uy_m-gtPajGgyMQQeEjgJ2XAiXTBR-HiDb_o)
 * [Lamp Genso by Lamp](https://music.youtube.com/playlist?list=OLAK5uy_neWBMZ7Kei1yE2Ubgu0aJVl82tFHOX3DA)
+* [Billy Strings - EP by Billy Strings](https://music.youtube.com/playlist?list=OLAK5uy_mXX2h0-TiNn0-treYJVOv5Tpjtt6SaRRg)

@@ -1,1 +1,1 @@
-/home/tristinb/Programming/Rust/projects/desktop/target/debug/desktop: /home/tristinb/Programming/Rust/projects/chip8_core/src/lib.rs /home/tristinb/Programming/Rust/projects/desktop/src/main.rs
+/home/tristinb/Programming/Rust/projects/chip8/desktop/target/debug/desktop: /home/tristinb/Programming/Rust/projects/chip8/chip8_core/src/lib.rs /home/tristinb/Programming/Rust/projects/chip8/desktop/src/main.rs
